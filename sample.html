@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap File Upload</title>
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Upload File</h1>
+    </div>
+
+    <input id="file" name="file" type="file">
+
+    <script src="bootstrap-file-upload.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#file').bootstrapFile({
+                btnType: 'btn-primary',
+                url: 'uploader.php'
+            });
+        })
+    </script>
+
+</div>
+
+</body>
+</html>
