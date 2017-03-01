@@ -9,11 +9,11 @@
             btnType: ''                     // btn-primary | btn-info | btn-success | btn-warning | btn-danger | btn-inverse
         }, options);
 
-        var form = $('<form method="post"></form>').css('margin', 0);
+        var form = $('<form method="post"></form>').css('display', 'none');
 
         var bar = $('<div class="bar"></div>');
         var percent = $('<div class="percent">0%</div>');
-        var progress = $('<div class="progress hidden"></div>').css('margin-top', '10px');
+        var progress = $('<div class="progress hidden"></div>').css('margin-top', '10px').css('margin-bottom', '0');
         var status = $('<div id="status" class="hidden"></div>').css('margin-top', '10px');
 
         progress.append(bar);
@@ -76,9 +76,10 @@
             var text = settings.btnText ? settings.btnText : '';
             var type = settings.btnType ? ' ' + settings.btnType : '';
 
+            var block = $('<div class="bootstrap-file-upload"></div>');
             var group = $('<div class="input-append"></div>');
-
-            var input = $('<input class="input-large uneditable-input" disabled="disabled" name="' + fileInputName + '" value="">');
+            var value = $('<input type="hidden" name="' + fileInputName + '" value="">');
+            var input = $('<input class="input-large uneditable-input" disabled="disabled" value="">');
             var button = $('<button class="btn' + type + '" type="button">' + icon + text + '</button>').click(function() {
                 clone.click();
             });
@@ -87,18 +88,22 @@
                 var uploadedFileName = $(this).val();
                 uploadedFileName = uploadedFileName.replace("C:\\fakepath\\", "");
                 input.val(uploadedFileName);
+                value.val(uploadedFileName);
                 uploadFile();
             });
 
-            $(group).append(clone);
-            $(group).append(input);
-            $(group).append(button);
+            $(clone).appendTo(form);
 
-            $(group).appendTo(form);
-            $(progress).appendTo(form);
-            $(status).appendTo(form);
+            $(input).appendTo(group);
+            $(button).appendTo(group);
 
-            self.replaceWith(form);
+            $(block).append(form);
+            $(block).append(value);
+            $(block).append(group);
+            $(block).append(progress);
+            $(block).append(status);
+
+            self.replaceWith(block);
 
         });
 
