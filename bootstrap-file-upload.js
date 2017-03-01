@@ -9,7 +9,7 @@
             btnType: ''                     // btn-primary | btn-info | btn-success | btn-warning | btn-danger | btn-inverse
         }, options);
 
-        var form = $('<form class="form-horizontal" method="post"></form>');
+        var form = $('<form method="post"></form>').css('margin', 0);
 
         var bar = $('<div class="bar"></div>');
         var percent = $('<div class="percent">0%</div>');
@@ -23,9 +23,6 @@
 
             form.attr('method', "post");
             form.attr('enctype', "multipart/form-data");
-
-            form.append(progress);
-            form.append(status);
 
             form.ajaxForm({
 
@@ -81,7 +78,7 @@
 
             var group = $('<div class="input-append"></div>');
 
-            var input = $('<input class="input-large uneditable-input" name="' + fileInputName + '" value="">');
+            var input = $('<input class="input-large uneditable-input" disabled="disabled" name="' + fileInputName + '" value="">');
             var button = $('<button class="btn' + type + '" type="button">' + icon + text + '</button>').click(function() {
                 clone.click();
             });
@@ -93,14 +90,13 @@
                 uploadFile();
             });
 
-            // $(clone).appendTo(group);
-            // $(input).appendTo(group);
-            // $(button).appendTo(group);
-
+            $(group).append(clone);
             $(group).append(input);
             $(group).append(button);
 
             $(group).appendTo(form);
+            $(progress).appendTo(form);
+            $(status).appendTo(form);
 
             self.replaceWith(form);
 
