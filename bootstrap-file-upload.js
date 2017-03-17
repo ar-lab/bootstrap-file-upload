@@ -4,6 +4,7 @@
 
         var settings = $.extend({
             url: false,
+            showInput: true,
             btnText: 'Browse',
             btnIcon: 'icon-folder-open',    // icon-folder-open | icon-file | icon-upload | icon-plus | icon-plus-sign
             btnType: ''                     // btn-primary | btn-info | btn-success | btn-warning | btn-danger | btn-inverse
@@ -77,7 +78,7 @@
             var type = settings.btnType ? ' ' + settings.btnType : '';
 
             var block = $('<div class="bootstrap-file-upload"></div>');
-            var group = $('<div class="input-append"></div>');
+            var group = $('<div></div>');
             var value = $('<input type="hidden" name="' + fileInputName + '" value="">');
             var input = $('<input class="input-large uneditable-input" disabled="disabled" value="">');
             var button = $('<button class="btn' + type + '" type="button">' + icon + text + '</button>').click(function() {
@@ -89,16 +90,24 @@
                 uploadedFileName = uploadedFileName.replace("C:\\fakepath\\", "");
                 input.val(uploadedFileName);
                 value.val(uploadedFileName);
-                uploadFile();
+                if (settings.url !== false) {
+                    uploadFile();
+                }
             });
 
-            $(clone).appendTo(form);
+            if (settings.showInput) {
+                group.addClass('input-append');
+                group.append(input);
+            }
+            group.append(button);
 
-            $(input).appendTo(group);
-            $(button).appendTo(group);
-
-            $(block).append(form);
-            $(block).append(value);
+            if (settings.url !== false) {
+                $(clone).appendTo(form);
+                $(block).append(form);
+                $(block).append(value);
+            } else {
+                $(block).append(clone);
+            }
             $(block).append(group);
             $(block).append(progress);
             $(block).append(status);
