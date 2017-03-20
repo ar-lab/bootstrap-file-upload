@@ -80,8 +80,14 @@
             var block = $('<div class="bootstrap-file-upload"></div>');
             var group = $('<div></div>');
             var value = $('<input type="hidden" name="' + fileInputName + '" value="">');
-            var input = $('<input class="input-large uneditable-input" disabled="disabled" value="">');
-            var button = $('<button class="btn' + type + '" type="button">' + icon + text + '</button>').click(function() {
+            var input = $('<input class="uneditable-input" disabled="disabled" value="">');
+            var button = $('<button class="btn' + type + '" type="button">' + icon + text + '</button>');
+
+            var currentVal = clone.attr('value');
+            input.val(currentVal);
+            value.val(currentVal);
+
+            button.click(function() {
                 clone.click();
             });
 
