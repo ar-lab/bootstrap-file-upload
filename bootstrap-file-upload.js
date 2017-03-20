@@ -87,6 +87,10 @@
             input.val(currentVal);
             value.val(currentVal);
 
+            var currentId = clone.attr('id');
+            clone.removeAttr('id');
+            group.attr('id', currentId);
+
             button.click(function() {
                 clone.click();
             });
