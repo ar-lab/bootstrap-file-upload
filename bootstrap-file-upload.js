@@ -34,6 +34,7 @@
             form.ajaxForm({
 
                 url: settings.url,
+                dataType: 'json',
 
                 beforeSend: function() {
                     progress.removeClass('hidden');
@@ -48,13 +49,21 @@
                     bar.width(percentVal);
                     percent.html(percentVal);
                 },
-                success: function() {
+                success: function(data) {
                     var percentVal = '100%';
                     bar.width(percentVal);
                     percent.html(percentVal);
+                    if (data.error) {
+                        status.html('<span class="text-error">' + data.message + '</span>');
+                    } else {
+                        status.html('<span class="text-success">' + data.message + '</span>');
+                    }
                 },
-                complete: function(xhr) {
-                    status.html(xhr.responseText);
+                error: function (xhr) {
+                    var message = 'Uploader errod: ' + xhr.status +  ' ' + xhr.statusText;
+                    status.html('<span class="text-error">' + message + '</span>');
+                },
+                complete: function() {
                     status.removeClass('hidden');
                     form.removeAttr('method');
                     form.removeAttr('enctype');
