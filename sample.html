@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap File Upload</title>
     <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
@@ -16,14 +18,26 @@
 
     <input id="file" name="file" type="file">
 
+    <script src="http://malsup.github.com/jquery.form.js"></script>
     <script src="bootstrap-file-upload.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#file').bootstrapFile({
                 btnType: 'btn-primary',
+                params: {
+                    fileKey: 'file_custom',
+                    fileTypes: 'audio/mpeg,audio/mp3',
+                    directory: '/tmp'
+                },
+                callback: fileUploadCallback,
                 url: 'uploader.php'
             });
-        })
+        });
+
+        function fileUploadCallback() {
+            alert('Complete!')
+        }
     </script>
 
 </div>

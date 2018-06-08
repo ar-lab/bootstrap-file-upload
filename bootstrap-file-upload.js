@@ -4,6 +4,8 @@
 
         var settings = $.extend({
             url: false,
+            params: {},
+            callback: null,
             showInput: true,
             btnText: 'Browse',
             btnIcon: 'icon-folder-open',    // icon-folder-open | icon-file | icon-upload | icon-plus | icon-plus-sign
@@ -12,10 +14,14 @@
 
         var form = $('<form method="post"></form>').css('display', 'none');
 
+        for (var key in settings.params) {
+            form.append('<input type="hidden" name="' + key + '" value="' + settings.params[key] + '">')
+        }
+
         var bar = $('<div class="bar"></div>');
         var percent = $('<div class="percent">0%</div>');
-        var progress = $('<div class="progress hidden"></div>').css('margin-top', '10px').css('margin-bottom', '0');
-        var status = $('<div id="status" class="hidden"></div>').css('margin-top', '10px');
+        var progress = $('<div class="progress hidden"></div>');
+        var status = $('<div id="status" class="hidden"></div>');
 
         progress.append(bar);
         progress.append(percent);
@@ -28,11 +34,6 @@
             form.ajaxForm({
 
                 url: settings.url,
-                // iframe: true,
-                // dataType: 'json',
-                // timeout: 3000,
-                // resetForm: true,
-                // clearForm: true,
 
                 beforeSend: function() {
                     progress.removeClass('hidden');
@@ -58,6 +59,10 @@
                     form.removeAttr('method');
                     form.removeAttr('enctype');
                     progress.addClass('hidden');
+
+                    if (typeof settings.callback === 'function') {
+                        settings.callback();
+                    }
                 }
             });
 
